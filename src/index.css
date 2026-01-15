@@ -2,5 +2,68 @@
 
 html {
     scroll-behavior: auto;
-    /* Lenis handles scrolling */
+    background-color: var(--bg);
+}
+
+/* LIGHT THEME */
+:root {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --card: #f8fafc;
+    --border: #e2e8f0;
+    --primary: #6366f1;
+    --secondary: #22c55e;
+    --muted: #64748b;
+}
+
+/* DARK THEME */
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #f8fafc;
+    --card: #1e293b;
+    --border: #334155;
+    --primary: #818cf8;
+    --secondary: #4ade80;
+    --muted: #94a3b8;
+}
+
+/* GLOBAL */
+html,
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* UTILITIES */
+.bg-app {
+    background-color: var(--bg);
+}
+
+.text-app {
+    color: var(--text);
+}
+
+.bg-card {
+    background-color: var(--card);
+}
+
+.border-app {
+    border-color: var(--border);
+}
+
+.text-muted {
+    color: var(--muted);
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
 }
