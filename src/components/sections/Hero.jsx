@@ -13,4 +13,4 @@ export default function Hero() {
       </motion.h1>
     </section>
   );
-}
+} 
