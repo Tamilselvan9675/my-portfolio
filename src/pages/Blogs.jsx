@@ -1,5 +1,5 @@
 import BlogCard from "../components/ui/BlogCard";
-import blogs from "../data/blogs";
+import blogs from "../content/home/blogs.content";
 
 export default function Blogs() {
   return (

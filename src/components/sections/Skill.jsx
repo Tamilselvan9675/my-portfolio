@@ -1,6 +1,5 @@
-import skills from "../../data/skills";
+import skills from "../../content/home/skills.content";
 import SkillCard from "../ui/SkillCard";
-
 
 export default function Skill() {
   return (

@@ -32,7 +32,7 @@ export default function AvailabilityBadge({ status = "available" }) {
 
         {/* 4. Text Label */}
         <span className="text-[12px] font-medium tracking-wide text-white/90 select-none">
-          {isAvailable ? "Available for work" : "Busy / Full"}
+          {isAvailable ? "Available" : "Busy"}
         </span>
       </div>
     </div>

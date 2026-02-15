@@ -6,6 +6,7 @@ import Projects from "../pages/Projects";
 import Skill from "../pages/Skill";
 import Blogs from "../pages/Blogs";
 import Contact from "../pages/Contact";
+import NotFound from "../pages/NotFound";
 
 export default function AppRouter() {
   return (
@@ -16,6 +17,9 @@ export default function AppRouter() {
       <Route path="/skill" element={<Skill />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/contact" element={<Contact />} />
+
+      {/* 404 Page */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

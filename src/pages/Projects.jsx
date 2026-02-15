@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { buildSEO } from "../utils/seo";
-import projects from "../data/projects";
+import projects from "../content/home/projects.content";
 import ProjectCard from "../components/ui/ProjectCard";
 
 export default function Projects() {
@@ -20,7 +20,7 @@ export default function Projects() {
         <h2 className="text-3xl font-bold mb-10">Projects</h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+          {projects.map(project => (
             <ProjectCard key={project.id} {...project} />
           ))}
         </div>
