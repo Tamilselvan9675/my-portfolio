@@ -5,6 +5,7 @@ import Hero from "../components/sections/Hero";
 import Experience from "../components/sections/Experience";
 import Skill from "../components/sections/Skill";
 import Projects from "../components/sections/Projects";
+import Testimonials from "../components/sections/Testimonials";
 import ContactCTA from "../components/sections/ContactCTA";
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       <Experience />
       <Skill />
       <Projects />
+      <Testimonials />
       <ContactCTA />
     </>
   );

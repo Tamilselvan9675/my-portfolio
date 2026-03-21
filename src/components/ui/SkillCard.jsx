@@ -1,18 +1,11 @@
-export default function SkillCard({ category, items }) {
+export default function SkillCard({ name, icon }) {
   return (
-    <div className="border rounded-lg p-6">
-      <h3 className="text-xl font-semibold mb-4">{category}</h3>
-
-      <ul className="flex flex-wrap gap-2">
-        {items.map((skill, index) => (
-          <li
-            key={index}
-            className="text-sm px-3 py-1 border rounded"
-          >
-            {skill}
-          </li>
-        ))}
-      </ul>
+    <div className="flex items-center gap-2.5 px-4 py-2.5 bg-[#121212] border border-[#27272a] rounded-xl hover:border-[#52525b] hover:bg-[#18181b] transition-all cursor-default">
+      {/* Icon Wrapper - You can put an <img /> or <svg /> here later */}
+      <span className="flex items-center justify-center w-5 h-5 text-sm">
+        {icon}
+      </span>
+      <span className="text-[15px] font-medium text-[#d4d4d8]">{name}</span>
     </div>
   );
 }

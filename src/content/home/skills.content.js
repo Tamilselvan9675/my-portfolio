@@ -1,16 +1,28 @@
 const skills = [
-  {
-    category: "Frontend",
-    items: ["React", "Tailwind CSS", "JavaScript", "HTML", "CSS"],
-  },
-  {
-    category: "Backend",
-    items: ["Node.js", "Express", "REST API"],
-  },
-  {
-    category: "Tools",
-    items: ["Git", "GitHub", "Vite", "VS Code"],
-  },
+  { name: "ReactJS", icon: "⚛️" },
+  { name: "NextJS", icon: "N" },
+  { name: "TypeScript", icon: "TS" },
+  { name: "Tailwind CSS", icon: "🌊" },
+  { name: "Motion", icon: "M" },
+  { name: "Sanity", icon: "S" },
+  { name: "Contentful", icon: "C" },
+  { name: "NodeJS", icon: "🟢" },
+  { name: "ExpressJS", icon: "ex" },
+  { name: "PostgreSQL", icon: "🐘" },
+  { name: "MongoDB", icon: "🍃" },
+  { name: "Prisma", icon: "▲" },
+  { name: "Zustand", icon: "🐻" },
+  { name: "Zod", icon: "💎" },
+  { name: "pnpm", icon: "📦" },
+  { name: "Bun", icon: "🥟" },
+  { name: "Git", icon: "🐙" },
+  { name: "GitHub", icon: "🐈" },
+  { name: "Vercel", icon: "▲" },
+  { name: "AWS", icon: "☁️" },
+  { name: "Docker", icon: "🐳" },
+  { name: "Expo", icon: "^" },
+  { name: "Clerk", icon: "🔐" },
+  { name: "Linux", icon: "🐧" },
 ];
 
 export default skills;
