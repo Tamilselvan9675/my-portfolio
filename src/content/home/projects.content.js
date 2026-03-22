@@ -1,57 +1,101 @@
-const projects = [
+const projectsData = [
   {
     id: 1,
-    title: "Crypto Verse – Digital Assets Hub",
-    image: "/project-crypto.jpg", // Replace with your image path
-    description: [
-      "Built a cryptocurrency tracking platform that consolidated live prices, market stats, and news int...",
-      "Integrated CoinRanking API & News API via RapidAPI, improving data accuracy and enabling...",
+    title: "Rune",
+    mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
+    features: [
+      "145+ free tools including text editors, PDF converters, and image processors",
+      "AI-powered tools for writing, summarizing, and content creation",
+      "Developer utilities with JSON formatter, regex tester, and code tools"
     ],
-    tech: [
-      { name: "Next.js", icon: "N" },
+    techStack: [
       { name: "React", icon: "⚛️" },
+      { name: "TypeScript", icon: "TS" },
+      { name: "Next.js", icon: "N" },
       { name: "Tailwind CSS", icon: "🌊" },
-      { name: "Redux Toolkit", icon: "🟣" },
-      { name: "Chart.js", icon: "📊" },
-      { name: "RapidAPI", icon: "API" },
+      { name: "Rune's AI", icon: "🧠" },
+      { name: "Framer Motion", icon: "✨" },
+      { name: "Node.js", icon: "🟩" },
+      { name: "Vercel", icon: "▲" },
     ],
-    codeLink: "#",
-    liveLink: "#",
+    // Replace these with your actual image paths
+    mobileImage1: "/mobile-placeholder-1.png", 
+    mobileImage2: "/mobile-placeholder-2.png",
+    desktopImage: "/desktop-placeholder.png",
   },
   {
     id: 2,
-    title: "AI Thief Detection System",
-    image: "/project-ai.jpg", // Replace with your image path
-    description: [
-      "Built a real-time object detection security system using TensorFlow.js (COCO-SSD) for browser-base...",
-      "Implemented person detection with bounding boxes and audio alerts, running entirely on the...",
+    title: "Rune",
+    mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
+    features: [
+      "145+ free tools including text editors, PDF converters, and image processors",
+      "AI-powered tools for writing, summarizing, and content creation",
+      "Developer utilities with JSON formatter, regex tester, and code tools"
     ],
-    tech: [
-      { name: "Next.js", icon: "N" },
-      { name: "TensorFlow.js", icon: "⚡" },
+    techStack: [
       { name: "React", icon: "⚛️" },
+      { name: "TypeScript", icon: "TS" },
+      { name: "Next.js", icon: "N" },
       { name: "Tailwind CSS", icon: "🌊" },
+      { name: "Rune's AI", icon: "🧠" },
+      { name: "Framer Motion", icon: "✨" },
+      { name: "Node.js", icon: "🟩" },
+      { name: "Vercel", icon: "▲" },
     ],
-    codeLink: "#",
-    liveLink: "#",
+    // Replace these with your actual image paths
+    mobileImage1: "/mobile-placeholder-1.png", 
+    mobileImage2: "/mobile-placeholder-2.png",
+    desktopImage: "/desktop-placeholder.png",
   },
   {
     id: 3,
-    title: "Weather App ⛅",
-    image: "/project-weather.jpg", // Replace with your image path
-    description: [
-      "Built a modern weather application providing real-time weather data, 5-day forecasts, and AQI...",
-      "Integrated Air Quality Index with health insights and multi-city weather tracking for comprehensive...",
+    title: "Rune",
+    mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
+    features: [
+      "145+ free tools including text editors, PDF converters, and image processors",
+      "AI-powered tools for writing, summarizing, and content creation",
+      "Developer utilities with JSON formatter, regex tester, and code tools"
     ],
-    tech: [
-      { name: "Next.js", icon: "N" },
+    techStack: [
       { name: "React", icon: "⚛️" },
+      { name: "TypeScript", icon: "TS" },
+      { name: "Next.js", icon: "N" },
       { name: "Tailwind CSS", icon: "🌊" },
-      { name: "Framer Motion", icon: "⚡" },
+      { name: "Rune's AI", icon: "🧠" },
+      { name: "Framer Motion", icon: "✨" },
+      { name: "Node.js", icon: "🟩" },
+      { name: "Vercel", icon: "▲" },
     ],
-    codeLink: "#",
-    liveLink: "#",
+    // Replace these with your actual image paths
+    mobileImage1: "/mobile-placeholder-1.png", 
+    mobileImage2: "/mobile-placeholder-2.png",
+    desktopImage: "/desktop-placeholder.png",
   },
+  {
+    id: 4,
+    title: "Rune",
+    mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
+    features: [
+      "145+ free tools including text editors, PDF converters, and image processors",
+      "AI-powered tools for writing, summarizing, and content creation",
+      "Developer utilities with JSON formatter, regex tester, and code tools"
+    ],
+    techStack: [
+      { name: "React", icon: "⚛️" },
+      { name: "TypeScript", icon: "TS" },
+      { name: "Next.js", icon: "N" },
+      { name: "Tailwind CSS", icon: "🌊" },
+      { name: "Rune's AI", icon: "🧠" },
+      { name: "Framer Motion", icon: "✨" },
+      { name: "Node.js", icon: "🟩" },
+      { name: "Vercel", icon: "▲" },
+    ],
+    // Replace these with your actual image paths
+    mobileImage1: "/mobile-placeholder-1.png", 
+    mobileImage2: "/mobile-placeholder-2.png",
+    desktopImage: "/desktop-placeholder.png",
+  },
+  // Add more projects here following the same structure...
 ];
 
-export default projects;
+export default projectsData;

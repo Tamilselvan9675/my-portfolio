@@ -36,17 +36,12 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {/* Projects Showcase List (Replaced Grid with Stack for the new layout) */}
+        <div className="flex flex-col gap-32 mb-16 w-full">
           {projects.map((project) => (
             <ProjectCard
               key={project.id}
-              title={project.title}
-              image={project.image}
-              description={project.description}
-              tech={project.tech}
-              codeLink={project.codeLink}
-              liveLink={project.liveLink}
+              {...project}
             />
           ))}
         </div>
