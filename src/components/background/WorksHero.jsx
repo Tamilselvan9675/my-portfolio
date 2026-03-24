@@ -1,28 +1,56 @@
+import { TextAnimate } from "../animations/textAnimations";
+import DarkVeil from "../background/DarkVeil";
+
 export default function WorksHero({ title, subtitleTop, subtitleBottom }) {
   return (
-    // Removed bg-[#050505] from the className below
-    <section className="relative flex flex-col items-center justify-center py-32 overflow-hidden min-h-[50vh]">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none ">
+        <DarkVeil
+          hueShift={0}
+          noiseIntensity={0}
+          scanlineIntensity={0}
+          speed={0.5}
+          scanlineFrequency={0}
+          warpAmount={0}
+        />
+      </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center flex flex-col items-center px-4">
-        {/* Title */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[45vw] h-[45vw] max-w-[700px] max-h-[700px] bg-white/5 rounded-full blur-[140px]" />
+      </div>
+
+      <div className="relative z-10 text-center flex flex-col items-center justify-center">
         <h1
-          className="text-white text-[12vw] sm:text-8xl md:text-9xl font-black tracking-tighter mb-8 leading-none"
-          style={{ fontFamily: '"Arial Black", Impact, system-ui, sans-serif' }}
+          className="pointer-events-none 
+                     bg-gradient-to-b from-white to-gray-400/20 
+                     bg-clip-text text-transparent 
+                     font-black tracking-[-0.05em] leading-none 
+                     text-[18vw] sm:text-[14vw] md:text-[12vw] lg:text-[16rem] px-10"
+          style={{ fontFamily: "Outfit, sans-serif" }}
         >
           {title}
         </h1>
 
-        {/* Subtitles */}
-        <div className="flex flex-col items-center gap-3 mt-4">
-          <p className="text-gray-400 text-xs sm:text-sm tracking-[0.4em] uppercase font-semibold">
+        <div className="flex flex-col items-center mt-4 gap-6">
+          <TextAnimate
+            as="p"
+            animation="blurInUp"
+            by="word"
+            delay={0.3}
+            className="text-gray-400 text-[10px] sm:text-xl tracking-[0.5em] uppercase font-semibold"
+          >
             {subtitleTop}
-          </p>
-          <p className="text-white text-3xl sm:text-4xl md:text-5xl italic font-serif">
+          </TextAnimate>
+
+          <TextAnimate
+            as="p"
+            animation="blurInUp"
+            by="character"
+            delay={0.5}
+            className="text-gray-400 text-4xl sm:text-5xl md:text-6xl italic font-serif font-semibold"
+          >
             {subtitleBottom}
-          </p>
+          </TextAnimate>
         </div>
       </div>
     </section>

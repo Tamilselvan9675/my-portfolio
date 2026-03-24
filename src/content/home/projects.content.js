@@ -25,7 +25,7 @@ const projectsData = [
   },
   {
     id: 2,
-    title: "Rune",
+    title: "Ruqne",
     mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
     features: [
       "145+ free tools including text editors, PDF converters, and image processors",
@@ -49,7 +49,7 @@ const projectsData = [
   },
   {
     id: 3,
-    title: "Rune",
+    title: "Run e",
     mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
     features: [
       "145+ free tools including text editors, PDF converters, and image processors",
@@ -73,7 +73,7 @@ const projectsData = [
   },
   {
     id: 4,
-    title: "Rune",
+    title: "Runeq",
     mainDescription: "🚀 Rune is your all-in-one productivity toolkit featuring 145+ powerful tools for learning, creating, and working smarter. From text & writing tools, PDF management, image editing, video processing, to developer utilities, calculators, and AI-powered assistants—Rune empowers students, professionals, and creators with free 24/7 access to streamline their workflow.",
     features: [
       "145+ free tools including text editors, PDF converters, and image processors",
