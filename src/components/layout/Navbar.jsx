@@ -51,7 +51,7 @@ export default function Navbar() {
           </a>
 
           {/* Calendly */}
-          <az
+          <a
             href="https://calendly.com/"
             target="_blank"
             rel="noreferrer"
@@ -59,7 +59,7 @@ export default function Navbar() {
             title="Book a Call"
           >
             <FiCalendar size={20} />
-          </az>
+          </a>
 
           {/* Status + Theme */}
           <div className="flex items-center gap-3 px-2">

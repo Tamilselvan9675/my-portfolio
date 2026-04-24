@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { buildSEO } from "../utils/seo";
 
+import CanvasScroll from "../components/sections/canvas/CanvasScroll";
 import Hero from "../components/sections/Hero";
 import Experience from "../components/sections/Experience";
 import Skill from "../components/sections/Skill";
@@ -24,12 +25,13 @@ export default function Home() {
         <meta property="og:image" content={seo.image} />
         <meta property="og:url" content={seo.url} />
       </Helmet>
-      <Hero />
-      <Experience />
-      <Skill />
-      <Projects />
-      <Testimonials />
-      <ContactCTA />
+      <CanvasScroll />
+      {/* <Hero /> */}
+      {/* <Experience /> */}
+      {/* <Skill /> */}
+      {/* <Projects /> */}
+      {/* <Testimonials /> */}
+      {/* <ContactCTA /> */}
     </>
   );
 }
