@@ -1,12 +1,12 @@
 import { TextAnimate } from "../animations/textAnimations";
 import DarkVeil from "../background/DarkVeil";
 
-export default function WorksHero({ title, subtitleTop, subtitleBottom }) {
+export default function WorksHero({ title, subtitleTop, subtitleBottom, hueShift }) {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none ">
         <DarkVeil
-          hueShift={0}
+          hueShift={hueShift || 0}
           noiseIntensity={0}
           scanlineIntensity={0}
           speed={0.5}

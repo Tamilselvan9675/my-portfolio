@@ -25,13 +25,13 @@ export default function Home() {
         <meta property="og:image" content={seo.image} />
         <meta property="og:url" content={seo.url} />
       </Helmet>
-      <CanvasScroll />
-      {/* <Hero /> */}
-      {/* <Experience /> */}
+      {/* <CanvasScroll /> */}
+      <Hero />
+      <Experience />
       {/* <Skill /> */}
       {/* <Projects /> */}
       {/* <Testimonials /> */}
-      {/* <ContactCTA /> */}
+      <ContactCTA />
     </>
   );
 }
