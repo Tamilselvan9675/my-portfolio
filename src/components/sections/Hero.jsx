@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import React, { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
 import Aurora from "../background/Aurora";
 import LightRays from "../background/LightRays";
 import { SparklesCore } from "../background/SparklesCore";
@@ -9,10 +10,41 @@ import CopyEmail from "../animations/copyEmail";
 
 export default function Hero() {
   const roles = ["Web Developer", "React JS Developer", "Full Stack Developer"];
+  const rootRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (!rootRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const badge = gsap.utils.toArray('[data-hero="badge"]');
+      const h1 = gsap.utils.toArray('[data-hero="h1"]');
+      const h2 = gsap.utils.toArray('[data-hero="h2"]');
+      const profileLine = gsap.utils.toArray('[data-hero="profile"]');
+      const ctas = gsap.utils.toArray('[data-hero="cta"]');
+      const photo = gsap.utils.toArray('[data-hero="photo"]');
+
+      gsap.set([...badge, ...h1, ...h2, ...profileLine, ...ctas], { opacity: 0, y: 40 });
+      gsap.set(badge, { y: -20 });
+      gsap.set(photo, { opacity: 0, scale: 0.9, x: 30 });
+
+      gsap
+        .timeline({ defaults: { ease: "power2.out" } })
+        .to(badge, { opacity: 1, y: 0, duration: 0.6 }, 0)
+        .to(h1, { opacity: 1, y: 0, duration: 0.7 }, 0.05)
+        .to(h2, { opacity: 1, y: 0, duration: 0.7 }, 0.15)
+        .to(profileLine, { opacity: 1, y: 0, duration: 0.7 }, 0.25)
+        .to(ctas, { opacity: 1, y: 0, duration: 0.7 }, 0.35)
+        .to(photo, { opacity: 1, scale: 1, x: 0, duration: 0.7 }, 0.1);
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative h-screen overflow-hidden flex items-center border-b">
-      {/* Aurora Background */}
+    <section
+      ref={rootRef}
+      className="relative h-screen overflow-hidden flex items-center border-b"
+    >
       <div className="absolute inset-0 z-0">
         <Aurora
           colorStops={["#7C3AED", "#FF7A18", "#FF7A18", "#7C3AED"]}
@@ -22,7 +54,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* Light Rays Layer */}
       <div className="absolute inset-0 z-[2] pointer-events-none">
         <LightRays
           raysOrigin="top-left"
@@ -41,10 +72,8 @@ export default function Hero() {
         />
       </div>
 
-      {/* Grid Layer */}
       <div className="absolute inset-0 z-[5] pointer-events-none fading-grid-bg" />
 
-      {/* Sparkles Overlay */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         <SparklesCore
           background="transparent"
@@ -57,26 +86,16 @@ export default function Hero() {
         />
       </div>
 
-      {/* Main Content */}
       <div className="relative z-20 w-full max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Text Content */}
           <div className="text-left">
-            {/* Upcoming Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mb-8 inline-flex items-center gap-3"
-            >
-              {/* Badge Only */}
-              <div className="inline-flex items-center  gap-2 px-2 py-[2px] rounded-full bg-blue-500/20 border border-blue-500/40 backdrop-blur-sm transition-all duration-300 hover:bg-transparent hover:border-blue-500/80 group">
+            <div data-hero="badge" className="mb-8 inline-flex items-center gap-3">
+              <div className="inline-flex items-center  gap-2 px-2 py-[2px] rounded-full bg-blue-500/20 border border-blue-500/40 backdrop-blur-sm transition-all duration-300 hover:bg-transparent group">
                 <span className="text-sm font-medium animate-pulse text-blue-400 hover:animate-none group-hover:text-blue-500 transition-colors duration-300">
                   Upcoming
                 </span>
               </div>
 
-              {/* Text Only */}
               <div className="text-sm font-medium">
                 <ShinyText
                   text="Expense Karo is launching soon!"
@@ -91,13 +110,10 @@ export default function Hero() {
                   disabled={false}
                 />
               </div>
-            </motion.div>
+            </div>
 
-            {/* Main Heading - Serif Typography */}
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+            <h1
+              data-hero="h1"
               className="text-5xl sm:text-6xl lg:text-6xl font-normal text-white leading-tight mb-4"
               style={{ fontFamily: "'Instrument Serif', 'Garamond', serif" }}
             >
@@ -113,13 +129,10 @@ export default function Hero() {
                 pauseOnHover={false}
                 disabled={false}
               />
-            </motion.h1>
+            </h1>
 
-            {/* Subheading - Serif Italic */}
-            <motion.h2
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+            <h2
+              data-hero="h2"
               className="text-4xl sm:text-5xl italic font-light text-white/90 leading-tight mb-8"
               style={{ fontFamily: "'Instrument Serif', 'Garamond', serif" }}
             >
@@ -135,15 +148,9 @@ export default function Hero() {
                 pauseOnHover={false}
                 disabled={false}
               />
-            </motion.h2>
+            </h2>
 
-            {/* Profile Section with Name and Avatar */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="flex items-center gap-4 mb-10"
-            >
+            <div data-hero="profile" className="flex items-center gap-4 mb-10">
               <span className="text-xl bg-gradient-to-t from-white via-white/80 to-white/30 bg-clip-text text-transparent">
                 Hey World, I'm Tamilselvan a
                 <FlipWords
@@ -151,23 +158,15 @@ export default function Hero() {
                   className="text-indigo-400 font-medium inline-block"
                 />
               </span>
-            </motion.div>
+            </div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            <div
+              data-hero="cta"
               className="flex flex-col sm:flex-row items-center gap-6"
             >
-              <button className="relative flex items-center gap-3 pl-7 pr-2 py-2 rounded-full bg-white/10 border border-white/15 text-white font-medium overflow-hidden transition-colors duration-400 ease-in-out hover:text-black hover:border-white group">
-                {/* Circle expands outward from arrow position */}
-                <span className="absolute right-[18px] top-1/2 translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white scale-0 group-hover:scale-[12] transition-transform duration-450 ease-in-out z-0" />
-
-                {/* Label */}
+              <button className="relative group flex items-center gap-3 pl-7 pr-2 py-2 rounded-full bg-white/10 border border-white/15 text-white font-medium overflow-hidden transition-colors duration-300 hover:bg-white/15">
+                <span className="absolute right-[18px] top-1/2 translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white scale-0 group-hover:scale-[12] transition-transform duration-450 ease-out" />
                 <span className="relative z-10">Let's Connect</span>
-
-                {/* Arrow circle */}
                 <span className="relative z-10 w-9 h-9 rounded-full bg-white flex items-center justify-center flex-shrink-0 transition-colors duration-400 group-hover:bg-[#1e2235]">
                   <svg
                     width="16"
@@ -185,16 +184,10 @@ export default function Hero() {
                 </span>
               </button>
               <CopyEmail />
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right Side - Profile Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, x: 30 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="flex justify-center lg:justify-end"
-          >
+          <div data-hero="photo" className="flex justify-center lg:justify-end">
             <ProfilePhoto
               href="#"
               height={450}
@@ -203,11 +196,10 @@ export default function Hero() {
               profileImage="https://ggayane.github.io/css-experiments/cards/dark_rider-character.webp"
               alt="Tamilselvan Profile"
             />
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Grid CSS */}
       <style>{`
         .fading-grid-bg::before {
           --size: 60px;

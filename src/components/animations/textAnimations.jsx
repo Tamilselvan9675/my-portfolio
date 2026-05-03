@@ -1,153 +1,16 @@
-import { memo } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { cn } from "../../utils/utils"
+import React, { memo, useLayoutEffect, useMemo, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { cn } from "../../utils/utils";
 
-const motionElements = {
-  article: motion.article,
-  div: motion.div,
-  h1: motion.h1,
-  h2: motion.h2,
-  h3: motion.h3,
-  h4: motion.h4,
-  h5: motion.h5,
-  h6: motion.h6,
-  li: motion.li,
-  p: motion.p,
-  section: motion.section,
-  span: motion.span,
-}
+gsap.registerPlugin(ScrollTrigger);
 
-// Fixed stagger timings to be constant
 const staggerTimings = {
   text: 0.06,
-  word: 0.1, // Increased slightly for better visual flow
+  word: 0.05,
   character: 0.05,
   line: 0.06,
-}
-
-const defaultContainerVariants = {
-  hidden: { opacity: 1 },
-  show: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0,
-      staggerChildren: 0.05,
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      staggerChildren: 0.05,
-      staggerDirection: -1,
-    },
-  },
-}
-
-const defaultItemVariants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-  exit: { opacity: 0 },
-}
-
-const defaultItemAnimationVariants = {
-  fadeIn: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { opacity: 0 },
-      show: { opacity: 1, transition: { duration: 0.5 } },
-      exit: { opacity: 0, transition: { duration: 0.3 } },
-    },
-  },
-  blurIn: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { opacity: 0, filter: "blur(10px)" },
-      show: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.5 } },
-      exit: { opacity: 0, filter: "blur(10px)", transition: { duration: 0.3 } },
-    },
-  },
-  blurInUp: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { opacity: 0, filter: "blur(10px)", y: 60 },
-      show: {
-        opacity: 1,
-        filter: "blur(0px)",
-        y: 0,
-        transition: { duration: 0.5, ease: "easeOut" },
-      },
-      exit: { opacity: 0, filter: "blur(10px)", y: 60 },
-    },
-  },
-  blurInDown: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { opacity: 0, filter: "blur(10px)", y: -60 },
-      show: {
-        opacity: 1,
-        filter: "blur(0px)",
-        y: 0,
-        transition: { duration: 0.5, ease: "easeOut" },
-      },
-    },
-  },
-  slideUp: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { y: 100, opacity: 0 }, // Increased offset for pronounced bottom-to-top motion
-      show: {
-        y: 0,
-        opacity: 1,
-        transition: { type: "spring", stiffness: 100, damping: 15 },
-      },
-      exit: { y: -100, opacity: 0 },
-    },
-  },
-  slideDown: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { y: -100, opacity: 0 },
-      show: {
-        y: 0,
-        opacity: 1,
-        transition: { type: "spring", stiffness: 100, damping: 15 },
-      },
-      exit: { y: 100, opacity: 0 },
-    },
-  },
-  slideLeft: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { x: 60, opacity: 0 },
-      show: { x: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
-      exit: { x: -60, opacity: 0 },
-    },
-  },
-  slideRight: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { x: -60, opacity: 0 },
-      show: { x: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
-      exit: { x: 60, opacity: 0 },
-    },
-  },
-  scaleUp: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { scale: 0.5, opacity: 0 },
-      show: { scale: 1, opacity: 1, transition: { type: "spring", damping: 15, stiffness: 300 } },
-      exit: { scale: 0.5, opacity: 0 },
-    },
-  },
-  scaleDown: {
-    container: defaultContainerVariants,
-    item: {
-      hidden: { scale: 1.5, opacity: 0 },
-      show: { scale: 1, opacity: 1, transition: { type: "spring", damping: 15, stiffness: 300 } },
-      exit: { scale: 1.5, opacity: 0 },
-    },
-  },
-}
+};
 
 const TextAnimateBase = ({
   children,
@@ -164,100 +27,153 @@ const TextAnimateBase = ({
   accessible = true,
   ...props
 }) => {
-  const MotionComponent = motionElements[Component]
+  const rootRef = useRef(null);
 
-  let segments = []
-  switch (by) {
-    case "word":
-      segments = children.split(/(\s+)/)
-      break
-    case "character":
-      segments = children.split("")
-      break
-    case "line":
-      segments = children.split("\n")
-      break
-    case "text":
-    default:
-      segments = [children]
-      break
-  }
+  const text = typeof children === "string" ? children : String(children ?? "");
 
-  // Use defined staggerTimings instead of math division so long strings don't lose the stagger
-  const finalVariants = variants
-    ? {
-        container: {
-          hidden: { opacity: 0 },
-          show: {
-            opacity: 1,
-            transition: {
-              opacity: { duration: 0.01, delay },
-              delayChildren: delay,
-              staggerChildren: staggerTimings[by],
-            },
+  const segments = useMemo(() => {
+    switch (by) {
+      case "word":
+        return text.split(/(\s+)/);
+      case "character":
+        return text.split("");
+      case "line":
+        return text.split("\n");
+      case "text":
+      default:
+        return [text];
+    }
+  }, [text, by]);
+
+  useLayoutEffect(() => {
+    if (!rootRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const container = rootRef.current;
+      const items = container.querySelectorAll('[data-ta="seg"]');
+
+      const segStagger = staggerTimings[by] ?? 0.06;
+
+      const applyPresetFrom = el => {
+        switch (animation) {
+          case "blurIn":
+            return { opacity: 0, filter: "blur(10px)" };
+          case "blurInUp":
+            return { opacity: 0, y: 60, filter: "blur(10px)" };
+          case "blurInDown":
+            return { opacity: 0, y: -60, filter: "blur(10px)" };
+          case "slideUp":
+            return { opacity: 0, y: 100 };
+          case "slideDown":
+            return { opacity: 0, y: -100 };
+          case "slideLeft":
+            return { opacity: 0, x: 60 };
+          case "slideRight":
+            return { opacity: 0, x: -60 };
+          case "scaleUp":
+            return { opacity: 0, scale: 0.5 };
+          case "scaleDown":
+            return { opacity: 0, scale: 1.5 };
+          case "fadeIn":
+          default:
+            return { opacity: 0 };
+        }
+      };
+
+      const applyPresetTo = () => {
+        switch (animation) {
+          case "blurIn":
+          case "blurInUp":
+          case "blurInDown":
+            return { opacity: 1, y: 0, x: 0, filter: "blur(0px)" };
+          case "slideUp":
+          case "slideDown":
+          case "slideLeft":
+          case "slideRight":
+            return { opacity: 1, y: 0, x: 0 };
+          case "scaleUp":
+          case "scaleDown":
+            return { opacity: 1, scale: 1 };
+          case "fadeIn":
+          default:
+            return { opacity: 1 };
+        }
+      };
+
+      const fromVars = variants ?? applyPresetFrom();
+      const toVars = variants
+        ? { ...variants, opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }
+        : applyPresetTo();
+
+      gsap.set(items, fromVars);
+
+      const tl = gsap.timeline({ paused: true });
+      tl.to(items, {
+        ...toVars,
+        duration: Math.max(0.01, duration),
+        ease: "power2.out",
+        delay,
+        stagger: segStagger,
+        overwrite: true,
+      });
+
+      if (startOnView) {
+        ScrollTrigger.create({
+          trigger: container,
+          start: "top 85%",
+          once,
+          onEnter: () => tl.play(0),
+          onLeaveBack: () => {
+            if (!once) tl.pause(0).progress(0);
           },
-          exit: {
-            opacity: 0,
-            transition: {
-              staggerChildren: staggerTimings[by],
-              staggerDirection: -1,
-            },
-          },
-        },
-        item: variants,
+        });
+      } else {
+        tl.play(0);
       }
-    : {
-        container: {
-          ...defaultItemAnimationVariants[animation].container,
-          show: {
-            ...defaultItemAnimationVariants[animation].container.show,
-            transition: {
-              delayChildren: delay,
-              staggerChildren: staggerTimings[by],
-            },
-          },
-          exit: {
-            ...defaultItemAnimationVariants[animation].container.exit,
-            transition: {
-              staggerChildren: staggerTimings[by],
-              staggerDirection: -1,
-            },
-          },
-        },
-        item: defaultItemAnimationVariants[animation].item,
-      }
+
+      return () => {
+        tl.kill();
+        ScrollTrigger.getAll().forEach(st => {
+          if (st.trigger === container) st.kill();
+        });
+      };
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [
+    animation,
+    by,
+    delay,
+    duration,
+    once,
+    startOnView,
+    variants,
+    segments.length,
+  ]);
 
   return (
-    <AnimatePresence mode="popLayout">
-      <MotionComponent
-        variants={finalVariants.container}
-        initial="hidden"
-        whileInView={startOnView ? "show" : undefined}
-        animate={startOnView ? undefined : "show"}
-        exit="exit"
-        className={cn("whitespace-pre-wrap", className)}
-        viewport={{ once }}
-        aria-label={accessible ? children : undefined}
-        {...props}
-      >
-        {accessible && <span className="sr-only">{children}</span>}
-        {segments.map((segment, i) => (
-          <motion.span
-            key={`${by}-${segment}-${i}`}
-            variants={finalVariants.item}
-            className={cn(
-              by === "line" ? "block" : "inline-block whitespace-pre",
-              by === "character" && "",
-              segmentClassName
-            )}
-            aria-hidden={accessible ? true : undefined}
-          >
-            {segment}
-          </motion.span>
-        ))}
-      </MotionComponent>
-    </AnimatePresence>
-  )
-}
+    <Component
+      ref={rootRef}
+      className={cn("whitespace-pre-wrap", className)}
+      aria-label={accessible ? text : undefined}
+      {...props}
+    >
+      {accessible && <span className="sr-only">{text}</span>}
+      {segments.map((segment, i) => (
+        <span
+          key={`${by}-${segment}-${i}`}
+          data-ta="seg"
+          className={cn(
+            by === "line" ? "block" : "inline-block whitespace-pre",
+            segmentClassName,
+          )}
+          aria-hidden={accessible ? true : undefined}
+        >
+          {segment}
+        </span>
+      ))}
+    </Component>
+  );
+};
 
-export const TextAnimate = memo(TextAnimateBase)
+export const TextAnimate = memo(TextAnimateBase);

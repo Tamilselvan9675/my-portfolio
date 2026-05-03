@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { buildSEO } from "../utils/seo";
-import projectsData from "../content/home/projects.content";
+import { toTechPills } from "../components/ui/tectIcons";
+import aboutContent from "../content/home/about.content";
+
 import WorksHero from "../components/background/WorksHero";
 import DotGrid from "../components/background/DotGrid";
-import TimelineCard from "../components/ui/TimelineCard";
 import Experience from "../components/sections/Experience";
+import TimelineCard from "../components/ui/TimelineCard";
 
 export default function About() {
-  const seo = buildSEO({
-    title: "About | Tamilselvan",
-    description: "Learn more about Tamilselvan and his journey as a developer.",
+const { seo, hero, experienceTimeline, aboutSection } = aboutContent;
+
+  const seoData = buildSEO({
+    title: seo.title,
+    description: seo.description,
   });
+
+  const timelineProjects = useMemo(() => {
+    if (!Array.isArray(experienceTimeline)) return [];
+    return experienceTimeline.map(item => ({
+      id: item.id,
+      title: item.company,
+      mainDescription: item.description,
+      features: [
+        item.role ? `Role: ${item.role}` : null,
+        item.duration ? `Duration: ${item.duration}` : null,
+      ].filter(Boolean),
+      techStack: toTechPills(item.techStack),
+    }));
+  }, [experienceTimeline]);
 
   return (
     <div className="relative bg-[#000000] min-h-screen font-sans">
@@ -25,18 +43,20 @@ export default function About() {
 
       <div className="relative z-10">
         <Helmet>
-          <title>{seo.title}</title>
-          <meta name="description" content={seo.description} />
+          <title>{seoData.title}</title>
+          <meta name="description" content={seoData.description} />
         </Helmet>
 
         <WorksHero
-          title="ABOUT ME"
-          subtitleTop="A passionate developer crafting digital experiences"
-          subtitleBottom="From code to creativity: Building the future, one line at a time"
-          hueShift={230}
+          title={hero.title}
+          subtitleTop={hero.subtitleTop}
+          subtitleBottom={hero.subtitleBottom}
+          hueShift={hero.hueShift}
         />
-        <Experience />
-        <TimelineCard projects={projectsData} />
+
+        <Experience {...aboutSection} />
+
+        <TimelineCard projects={timelineProjects} />
       </div>
     </div>
   );

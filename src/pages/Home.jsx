@@ -26,12 +26,12 @@ export default function Home() {
         <meta property="og:url" content={seo.url} />
       </Helmet>
       {/* <CanvasScroll /> */}
-      <Hero />
-      <Experience />
+      {/* <Hero /> */}
+      {/* <Experience /> */}
       {/* <Skill /> */}
       {/* <Projects /> */}
       {/* <Testimonials /> */}
-      <ContactCTA />
+      {/* <ContactCTA /> */}
     </>
   );
 }

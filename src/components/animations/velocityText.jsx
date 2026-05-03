@@ -1,43 +1,54 @@
-import {
-  motion,
-  useScroll,
-  useVelocity,
-  useTransform,
-  useSpring,
-} from "framer-motion"
-import React, { useRef } from "react"
+import React, { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const VelocityText = ({
   text,
   height = "1000vh",
   scrollDistance = -4000,
 }) => {
-  const targetRef = useRef(null)
+  const targetRef = useRef(null);
+  const textRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start start", "end start"],
-  })
+  useLayoutEffect(() => {
+    if (!targetRef.current || !textRef.current) return;
 
-  const scrollVelocity = useVelocity(scrollYProgress)
+    const ctx = gsap.context(() => {
+      const el = textRef.current;
 
-  const skewXRaw = useTransform(
-    scrollVelocity,
-    [-0.5, 0.5],
-    ["45deg", "-45deg"]
-  )
-  const skewX = useSpring(skewXRaw, {
-    mass: 3,
-    stiffness: 400,
-    damping: 50,
-  })
+      gsap.set(el, { x: 0, skewX: 0, transformOrigin: "bottom left" });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], [0, scrollDistance])
-  const x = useSpring(xRaw, {
-    mass: 3,
-    stiffness: 400,
-    damping: 50,
-  })
+      let prev = 0;
+
+      ScrollTrigger.create({
+        trigger: targetRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onUpdate(self) {
+          const p = self.progress;
+          const x = p * scrollDistance;
+
+          const v = p - prev;
+          prev = p;
+
+          const skew = gsap.utils.clamp(-45, 45, -v * 900);
+
+          gsap.to(el, {
+            x,
+            skewX: skew,
+            duration: 0.15,
+            ease: "power3.out",
+            overwrite: true,
+          });
+        },
+      });
+    }, targetRef);
+
+    return () => ctx.revert();
+  }, [scrollDistance]);
 
   return (
     <section
@@ -46,13 +57,13 @@ export const VelocityText = ({
       style={{ height }}
     >
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.p
-          style={{ skewX, x }}
+        <p
+          ref={textRef}
           className="origin-bottom-left whitespace-nowrap text-5xl font-black uppercase leading-[0.85] md:text-7xl md:leading-[0.85]"
         >
           {text}
-        </motion.p>
+        </p>
       </div>
     </section>
-  )
-}
+  );
+};

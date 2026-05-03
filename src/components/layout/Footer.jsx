@@ -1,6 +1,6 @@
 import footerContent from "../../content/global/footer.content";
+import ShowcaseCards from "../showcase/ShowcaseCards";
 import ContactHero from "../ui/ContactHero";
-import ShowcaseCards from "../ui/ShowcaseCards";
 
 export default function Footer() {
   return (

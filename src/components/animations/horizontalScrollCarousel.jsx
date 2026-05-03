@@ -1,5 +1,8 @@
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const HorizontalScrollCarousel = ({
   cards = [],
@@ -7,21 +10,37 @@ export const HorizontalScrollCarousel = ({
   end = "-95%",
 }) => {
   const targetRef = useRef(null);
+  const trackRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  useLayoutEffect(() => {
+    if (!targetRef.current || !trackRef.current) return;
 
-  const x = useTransform(scrollYProgress, [0, 1], [start, end]);
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: targetRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate(self) {
+          const s = parseFloat(start);
+          const e = parseFloat(end);
+          const v = gsap.utils.interpolate(s, e, self.progress);
+          gsap.set(trackRef.current, { xPercent: v });
+        },
+      });
+    }, targetRef);
+
+    return () => ctx.revert();
+  }, [start, end, cards.length]);
 
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-neutral-900">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex gap-4">
+        <div ref={trackRef} className="flex gap-4">
           {cards.map(card => {
             return <Card card={card} key={card.id} />;
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

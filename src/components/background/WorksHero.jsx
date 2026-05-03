@@ -1,18 +1,59 @@
+import React, { useEffect, useRef, useState } from "react";
 import { TextAnimate } from "../animations/textAnimations";
 import DarkVeil from "../background/DarkVeil";
 
-export default function WorksHero({ title, subtitleTop, subtitleBottom, hueShift }) {
+export default function WorksHero({
+  title,
+  subtitleTop,
+  subtitleBottom,
+  hueShift,
+}) {
+  const sectionRef = useRef(null);
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduce) {
+      setIsActive(false);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setIsActive(entry.isIntersecting);
+      },
+      { root: null, threshold: 0.15 },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0 pointer-events-none ">
-        <DarkVeil
-          hueShift={hueShift || 0}
-          noiseIntensity={0}
-          scanlineIntensity={0}
-          speed={0.5}
-          scanlineFrequency={0}
-          warpAmount={0}
-        />
+    <section
+      ref={sectionRef}
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {isActive ? (
+          <DarkVeil
+            hueShift={hueShift || 0}
+            noiseIntensity={0}
+            scanlineIntensity={0}
+            speed={0.5}
+            scanlineFrequency={0}
+            warpAmount={0}
+          />
+        ) : (
+          <div className="w-full h-full" />
+        )}
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -36,7 +77,7 @@ export default function WorksHero({ title, subtitleTop, subtitleBottom, hueShift
             as="p"
             animation="blurInUp"
             by="word"
-            delay={0.3}
+            delay={0.1}
             className="text-gray-400 text-[10px] sm:text-xl tracking-[0.5em] uppercase font-semibold"
           >
             {subtitleTop}
@@ -45,9 +86,9 @@ export default function WorksHero({ title, subtitleTop, subtitleBottom, hueShift
           <TextAnimate
             as="p"
             animation="blurInUp"
-            by="character"
-            delay={0.5}
-            className="text-gray-400 text-4xl sm:text-5xl md:text-6xl italic font-serif font-semibold"
+            by="line"
+            delay={0.2}
+            className="text-gray-400 text-4xl sm:text-5xl md:text-4xl  font-['Outfit', _monospace] "
           >
             {subtitleBottom}
           </TextAnimate>
