@@ -1,5 +1,7 @@
 import React from "react";
 import { FaReact, FaNodeJs, FaGitAlt } from "react-icons/fa";
+import { LuGithub, LuLinkedin } from "react-icons/lu";
+import { RiTwitterXLine } from "react-icons/ri";
 import {
   SiTypescript,
   SiRedux,
@@ -120,6 +122,18 @@ export const techIconMap = {
     className: DEFAULT_CLASSNAME,
   },
   n8n: { Icon: SiN8N, size: DEFAULT_SIZE, className: DEFAULT_CLASSNAME },
+
+  github: { Icon: LuGithub, size: DEFAULT_SIZE, className: DEFAULT_CLASSNAME },
+  linkedin: {
+    Icon: LuLinkedin,
+    size: DEFAULT_SIZE,
+    className: DEFAULT_CLASSNAME,
+  },
+  twitter: {
+    Icon: RiTwitterXLine,
+    size: DEFAULT_SIZE,
+    className: DEFAULT_CLASSNAME,
+  },
 };
 
 export function toTechPills(techStack) {

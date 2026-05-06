@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 
-const EvervaultCard = ({ text, className }) => {
+const EvervaultCard = ({ text, subtitle, className }) => {
   const mouse = useRef({ x: 0, y: 0 });
   const rafRef = useRef(0);
   const lastGenRef = useRef(0);
@@ -11,7 +11,7 @@ const EvervaultCard = ({ text, className }) => {
   const rootClassName = useMemo(
     () =>
       [
-        "p-0.5  bg-transparent aspect-square  flex items-center justify-center w-full h-full relative",
+        "p-0 bg-transparent flex items-center justify-center w-full h-full relative",
         className,
       ]
         .filter(Boolean)
@@ -47,10 +47,19 @@ const EvervaultCard = ({ text, className }) => {
         className="group/card rounded-3xl w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full"
       >
         <CardPattern mouseRef={mouse} randomString={randomString} />
-        <div className="relative z-10 flex items-center justify-center">
-          <div className="relative h-44 w-44  rounded-full flex items-center justify-center text-white font-bold text-4xl">
-            <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm rounded-full" />
-            <span className="dark:text-white text-black z-20">{text}</span>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="relative h-44 w-44 rounded-full flex items-center justify-center">
+            <div className="absolute inset-0 bg-white/[0.08] dark:bg-black/[0.8] blur-sm rounded-full" />
+
+            <div className="relative z-20 flex flex-col items-center">
+              <span className="text-white font-bold text-4xl leading-none tracking-tight">
+                {text}
+              </span>
+
+              <span className="mt-1 text-[11px] text-white/40 font-semibold leading-none">
+                (Click to download)
+              </span>
+            </div>
           </div>
         </div>
       </div>

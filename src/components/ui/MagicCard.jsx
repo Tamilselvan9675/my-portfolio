@@ -170,7 +170,7 @@ export default function MagicCard(props) {
     <div
       ref={rootRef}
       className={cn(
-        "group relative isolate overflow-hidden rounded-[inherit] border border-transparent",
+        "group relative isolate overflow-hidden rounded-3xl border border-transparent",
         className,
       )}
       onPointerMove={handlePointerMove}

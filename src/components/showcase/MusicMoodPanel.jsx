@@ -14,12 +14,12 @@ export default function MusicMoodPanel({ content }) {
           </p>
         </div>
 
-        <p className="mt-4 text-[15px] md:text-[17px] leading-[1.45] text-[#c4c4c7] max-w-[95%]">
+        <p className="mt-2 text-[15px] md:text-[12px] leading-[1.45] text-[#c4c4c7] max-w-[95%]">
           From deep focus to feel-good vibes, I create playlists that fuel my day
           — “Working Energy“ is one of my favorites.
         </p>
 
-        <div className="mt-6 flex justify-center pb-1">
+        <div className="mt-4 flex justify-center pb-1">
           <div className="w-full rounded-xl overflow-hidden shadow-lg border border-white/10">
             <iframe
               title="spotify-player"

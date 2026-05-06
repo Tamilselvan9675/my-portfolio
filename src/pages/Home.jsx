@@ -31,7 +31,7 @@ export default function Home() {
       {/* <Skill /> */}
       {/* <Projects /> */}
       {/* <Testimonials /> */}
-      {/* <ContactCTA /> */}
+      <ContactCTA />
     </>
   );
 }

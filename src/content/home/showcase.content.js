@@ -2,15 +2,12 @@ const showcaseContent = {
   sectionTitle: "Showcase",
   sectionSubtitle: "Selected Work",
   cards: [
-    { id: 1, type: "evervault", text: "EV" },
+    { id: 1, type: "evervault", text: "Resume", subtitle: "Click to download" },
     {
       id: 2,
       type: "github",
       label: "LATEST PUSH",
-      title: "Partb's Github",
-      status: "12h ago",
-      headline: '"feat: add template previews for various components"',
-      repoName: "Private work",
+      title: "Tamilselvan's Github",
       socials: { github: "#", linkedin: "#", twitter: "#" },
     },
     {
